@@ -1,0 +1,30 @@
+name: Auto Merge to Main
+
+on:
+  push:
+    branches:
+      - 'tienvmse182865@fpt.edu.vn'  # Thay đổi tên branch để match với branch của bạn
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Git
+        run: |
+          git config user.name "Minh Tien"
+          git config user.email "tienvmse182865@fpt.edu.vn"
+
+      - name: Merge to main
+        run: |
+          git checkout main
+          git pull origin main
+          git merge --no-ff origin/tienvmse182865@fpt.edu.vn -m "Auto-merge tienvmse182865@fpt.edu.vn into main"
+          git push origin main 
